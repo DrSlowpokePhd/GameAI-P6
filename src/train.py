@@ -1,15 +1,21 @@
 import matplotlib.pyplot as plt
 # TODO Student: update basic_model -> dropout_model to change which model gets trained
-from p6_deep_learning.models.basic_model import model
+from models.basic_model import model
 from preprocess import train_generator, validation_generator
 
 # Train the model defined in basic_model.py
-history = None  # TODO make a call to model.fit_generator
-
+# TODO make a call to model.fit_generator
+print(train_generator)
+history = model.fit_generator(
+        train_generator,
+        steps_per_epoch=100,
+        epochs=30,
+        validation_data=validation_generator,
+        validation_steps=50)
 # Save the model weights
 # Change the name of this file to avoid overwriting previously trained models
 model.save('cats_and_dogs_small_1.h5')
-
+model.summary()
 # Plot the  loss and accuracy over the training run
 def plot(history):
     acc = history.history['acc']
