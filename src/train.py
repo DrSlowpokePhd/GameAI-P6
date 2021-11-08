@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 # TODO Student: update basic_model -> dropout_model to change which model gets trained
-from models.basic_model import model
+from models.dropout_model import model
 from preprocess import train_generator, validation_generator
+from tensorflow import keras
 
 # Train the model defined in basic_model.py
 # TODO make a call to model.fit_generator
@@ -14,7 +15,7 @@ history = model.fit_generator(
         validation_steps=50)
 # Save the model weights
 # Change the name of this file to avoid overwriting previously trained models
-model.save('cats_and_dogs_small_1.h5')
+model.save('cats_and_dogs_small_dropout.h5')
 model.summary()
 # Plot the  loss and accuracy over the training run
 def plot(history):

@@ -1,24 +1,38 @@
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing import image
 import matplotlib.pyplot as plt
+import os
 
 train_dir = 'cats_and_dogs_small/train/'
 validation_dir = 'cats_and_dogs_small/validation/'
 
 # Create the data generators (each should be an instance of ImageDataGenerator)
 # Rescale all images from the [0...255] range to the [0...1] range
-train_datagen = ImageDataGenerator() # TODO: Student
-test_datagen = ImageDataGenerator() # TODO: Student
+
+#rotation_range=180, brightness_range=(0, 20),
+                                   #width_shift_range=0.5, height_shift_range=0.5
+train_datagen = ImageDataGenerator(rescale=1.0/255.0,
+                                   rotation_range=20,
+                                   width_shift_range=0.2,
+                                   height_shift_range=0.2,
+                                   horizontal_flip=True)  # TODO: Student
+# validation generator
+test_datagen = ImageDataGenerator(rescale=1.0/255.0)  # TODO: Student
 
 # Call flow_from_directory on each of your datagen objects
 train_generator = train_datagen.flow_from_directory(train_dir,
                                                     target_size=(150, 150),
                                                     batch_size=20,
-                                                    class_mode='binary')  # TODO: Student
+                                                    class_mode='binary',
+                                                    color_mode="rgb",
+                                                    seed=100)  # TODO: Student
 validation_generator = test_datagen.flow_from_directory(validation_dir,
                                                         target_size=(150, 150),
                                                         batch_size=20,
-                                                        class_mode='binary')  # TODO: Student
+                                                        class_mode='binary',
+                                                        color_mode="rgb",
+                                                        seed=100)  # TODO: Student
+
 
 # Usage Example:
 for data_batch, labels_batch in train_generator:
@@ -33,8 +47,8 @@ def show_example_images(datagen):
 
     :param datagen: The data generator.
     """
-    fnames = [os.path.join(train_cats_dir, fname) for
-        fname in os.listdir(train_cats_dir)]
+    fnames = [os.path.join('cats_and_dogs_small/train/dogs', fname) for
+        fname in os.listdir('cats_and_dogs_small/train/dogs')]
     img_path = fnames[3]            # Chooses one image to augment
     img = image.load_img(img_path, target_size=(150, 150))
     x = image.img_to_array(img)     # Converts it to a Numpy array with shape (150, 150, 3) 
