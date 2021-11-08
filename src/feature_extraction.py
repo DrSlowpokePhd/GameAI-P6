@@ -5,6 +5,8 @@ import os
 
 conv_base = None # TODO: Student - Load the VGG16 model (see writeup)
 datagen = None   # TODO: Student - create a data generator  (see part 3)
+#conv_base = VGG16(True, None, )
+#datagen = ImageDataGenerator()
 batch_size = 0   # TODO: Student define a batch size (see writeup)
 
 base_dir = 'cats_and_dogs_small'
